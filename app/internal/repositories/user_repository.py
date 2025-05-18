@@ -7,12 +7,6 @@ from app.internal.database.models import User
 
 
 class UserRepository(ABC):
-    # session: Session
-
-    # @abstractmethod
-    # def __init__(self, session: Annotated[Session, Depends(get_session)]):
-    #     pass
-
     @abstractmethod
     def get_user_by_id(self, id: int) -> User | None:
         pass

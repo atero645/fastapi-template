@@ -10,7 +10,9 @@ name = "fastapi-template"
 version = "0.0.1"
 dependencies = [
   "fastapi[standard]",
-  "sqlmodel"
+  "sqlmodel",
+  "pydantic-settings",
+  "python-dotenv"
 ]
 requires-python = ">=3.9"
 authors = [

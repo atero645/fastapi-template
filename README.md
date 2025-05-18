@@ -1,6 +1,6 @@
 # FastAPI template
 
-This is simple template for various API architecure ideas testing.
+This is simple template for various API architecture ideas testing.
 
 ## How to start
 

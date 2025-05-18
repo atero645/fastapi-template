@@ -1,13 +1,18 @@
 from contextlib import asynccontextmanager
+import logging
+
 import uvicorn
 from fastapi import FastAPI
-from app.database import create_db
+from app.database import init_db
 from app.routers import users_router
+
+
+logger = logging.getLogger("uvicorn.error")
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    create_db()
+    init_db()
     yield
 
 
@@ -18,7 +23,7 @@ app.include_router(users_router.router)
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return "API Started!"
 
 
 if __name__ == "__main__":
