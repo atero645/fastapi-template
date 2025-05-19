@@ -3,3 +3,6 @@ __pycache__
 *.db
 .ruff_cache
 .env
+.vscode
+.coverage
+.pytest_cache

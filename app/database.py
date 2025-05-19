@@ -2,7 +2,7 @@ from functools import lru_cache
 import logging
 from typing import Annotated
 from fastapi import Depends
-from sqlalchemy import Engine
+from sqlalchemy import Engine, URL
 from sqlmodel import SQLModel, Session, create_engine
 from app.config import get_settings
 
@@ -14,14 +14,22 @@ def init_db() -> Engine:
     from app.internal.database.models import User  # noqa: F401
 
     config = get_settings()
-    # logger.info(f"DB INIT {config}")
 
-    sqlite_url = f"sqlite:///{config.sqlite_db_name}"
+    db_url = URL.create(
+        drivername="postgresql+psycopg2",
+        username=config.db_user,
+        password=config.db_pass,
+        host=config.db_host,
+        port=config.db_port,
+        database=config.db_database,
+    )
 
-    connect_args = {"check_same_thread": False}
-    engine = create_engine(sqlite_url, connect_args=connect_args, pool_size=30)
-
-    SQLModel.metadata.create_all(engine)
+    try:
+        engine = create_engine(db_url, pool_size=30, pool_pre_ping=True)
+        SQLModel.metadata.create_all(engine)
+    except Exception as error:
+        logger.error("ERROR CONNECT TO DB!")
+        raise error
 
     return engine
 

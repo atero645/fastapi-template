@@ -10,21 +10,19 @@ from app.routers import users_router
 logger = logging.getLogger("uvicorn.error")
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    init_db()
-    yield
+def create_app() -> FastAPI:
+    @asynccontextmanager
+    async def lifespan(app: FastAPI):
+        init_db()
+        yield
 
+    app = FastAPI(lifespan=lifespan)
 
-app = FastAPI(lifespan=lifespan)
+    app.include_router(users_router.router)
 
-app.include_router(users_router.router)
-
-
-@app.get("/")
-def read_root():
-    return "API Started!"
+    return app
 
 
 if __name__ == "__main__":
+    app = create_app()
     uvicorn.run(app, host="0.0.0.0", port=8000)

@@ -10,6 +10,7 @@ class AppSettings(BaseSettings):
     db_port: int = 3306
     db_user: str = ""
     db_pass: str = ""
+    db_database: str = "postgres"
     sqlite_db_name: str = "local.db"
 
     model_config = SettingsConfigDict(env_file=".env")

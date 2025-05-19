@@ -12,7 +12,8 @@ dependencies = [
   "fastapi[standard]",
   "sqlmodel",
   "pydantic-settings",
-  "python-dotenv"
+  "python-dotenv",
+  "psycopg2"
 ]
 requires-python = ">=3.9"
 authors = [
@@ -25,5 +26,11 @@ license = "MIT"
 
 [project.optional-dependencies]
 dev = [
-    "ruff"
+    "ruff",
+    "pytest",
+    "faker"
 ]
+
+[tool.pytest.ini_options]
+addopts = "--cov=app --cov-report=term-missing"
+testpaths = ["tests"]
