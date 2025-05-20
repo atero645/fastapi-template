@@ -3,9 +3,9 @@ import logging
 
 import uvicorn
 from fastapi import FastAPI
-from app.internal.middlewares.file_middleware import LimitUploadSizeMiddleware
+from app.internal.middlewares import middlewares
 from app.database import init_db
-from app.routers import users_router, files_router
+from app.routers import routers
 
 
 logger = logging.getLogger("uvicorn.error")
@@ -19,10 +19,11 @@ def create_app() -> FastAPI:
 
     app = FastAPI(lifespan=lifespan)
 
-    app.add_middleware(LimitUploadSizeMiddleware)
+    for middleware in middlewares:
+        app.add_middleware(middleware)
 
-    app.include_router(users_router.router)
-    app.include_router(files_router.router)
+    for router in routers:
+        app.include_router(router)
 
     return app
 
