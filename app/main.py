@@ -3,6 +3,7 @@ import logging
 
 import uvicorn
 from fastapi import FastAPI
+from app.internal.middlewares.file_middleware import LimitUploadSizeMiddleware
 from app.database import init_db
 from app.routers import users_router, files_router
 
@@ -17,6 +18,8 @@ def create_app() -> FastAPI:
         yield
 
     app = FastAPI(lifespan=lifespan)
+
+    app.add_middleware(LimitUploadSizeMiddleware)
 
     app.include_router(users_router.router)
     app.include_router(files_router.router)
