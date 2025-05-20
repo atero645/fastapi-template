@@ -25,3 +25,14 @@ class UserUpdate(UserBase):
     first_name: str | None = None  # type: ignore
     last_name: str | None = None  # type: ignore
     email: str | None = None  # type: ignore
+
+
+class AppFile(SQLModel, table=True):
+    __tablename__ = "files"  # type: ignore
+
+    id: int | None = Field(default=None, primary_key=True)
+    filename: str = Field(index=True)
+    original_name: str
+    extension: str
+    size: str
+    path: str

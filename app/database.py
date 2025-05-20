@@ -11,7 +11,7 @@ logger = logging.getLogger("uvicorn.error")
 
 @lru_cache
 def init_db() -> Engine:
-    from app.internal.database.models import User  # noqa: F401
+    from app.internal.database.models import User, AppFile  # noqa: F401
 
     config = get_settings()
 

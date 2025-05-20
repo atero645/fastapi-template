@@ -4,7 +4,7 @@ import logging
 import uvicorn
 from fastapi import FastAPI
 from app.database import init_db
-from app.routers import users_router
+from app.routers import users_router, files_router
 
 
 logger = logging.getLogger("uvicorn.error")
@@ -19,6 +19,7 @@ def create_app() -> FastAPI:
     app = FastAPI(lifespan=lifespan)
 
     app.include_router(users_router.router)
+    app.include_router(files_router.router)
 
     return app
 
