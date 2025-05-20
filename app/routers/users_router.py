@@ -7,7 +7,7 @@ router = APIRouter(tags=["users"])
 
 
 @router.get("/users/{user_id}", response_model=UserPublic)
-async def read_user(user_id: int, user_repository: UserRepoDep):
+def read_user(user_id: int, user_repository: UserRepoDep):
     user_service = UserService(user_repository)
     user = user_service.get_user(user_id)
     if not user:
@@ -16,7 +16,7 @@ async def read_user(user_id: int, user_repository: UserRepoDep):
 
 
 @router.get("/users/", response_model=list[UserPublic])
-async def read_users(
+def read_users(
     pagination: PaginationParams,
     user_repository: UserRepoDep,
 ):
@@ -26,7 +26,7 @@ async def read_users(
 
 
 @router.post("/users/", response_model=UserPublic, status_code=201)
-async def create_user(
+def create_user(
     user: UserCreate,
     user_repository: UserRepoDep,
 ):
@@ -37,7 +37,7 @@ async def create_user(
 
 
 @router.patch("/users/{user_id}", response_model=UserPublic)
-async def update_user(
+def update_user(
     user_id: int,
     user: UserUpdate,
     user_repository: UserRepoDep,
